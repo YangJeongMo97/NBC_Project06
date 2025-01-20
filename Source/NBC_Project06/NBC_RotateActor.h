@@ -31,11 +31,17 @@ protected:
 	float RotationSpeed;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Settings")
-	bool isYaw;
+	bool isYawRotate;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Settings")
-	bool isPitch;
+	bool isPitchRotate;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Settings")
-	bool isRoll;
+	bool isRollRotate;
+
+public:
+	FORCEINLINE void SetRotationSpeed(float inValue) { RotationSpeed = inValue; }
+	FORCEINLINE void SetYawRotate(bool inValue) { isYawRotate = inValue; }
+	FORCEINLINE void SetPitchRotate(bool inValue) { isPitchRotate = inValue; }
+	FORCEINLINE void SetRollRotate(bool inValue) { isRollRotate = inValue; }
 };

@@ -21,6 +21,7 @@ void ANBC_BlinkActor::BeginPlay()
 {
 	Super::BeginPlay();
 	
+	//게임 시작 시 Visibility 세팅
 	if (isVisible)
 	{
 		Mesh->SetVisibility(true);
@@ -32,6 +33,7 @@ void ANBC_BlinkActor::BeginPlay()
 		Mesh->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 	}
 
+	//n초마다 블럭이 사라졌다 생겼다를 반복
 	GetWorld()->GetTimerManager().SetTimer(ChageStateTimerHandle, this, &ANBC_BlinkActor::ChangeState, ChangeTime, true);
 }
 

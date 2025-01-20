@@ -23,10 +23,8 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
-	void GoForward();
-	void GoBack();
-	void GoUp();
-	void GoDown();
+	void ForwardOrBack(bool inTrigger);
+	void UpOrDown(bool inTrigger);
 
 protected:
 	UPROPERTY(VisibleDefaultsOnly)
@@ -44,7 +42,7 @@ protected:
 	float MovementSpeed;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Settings")
-	bool isGoBack;
+	bool isHorizontal;
 
-	bool isTrigger;
+	bool isArrive;
 };

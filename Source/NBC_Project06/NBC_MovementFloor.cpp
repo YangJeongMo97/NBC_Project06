@@ -12,7 +12,7 @@ ANBC_MovementFloor::ANBC_MovementFloor()
 	Mesh = CreateDefaultSubobject<UStaticMeshComponent>("Mesh");
 	RootComponent = Mesh;
 
-	isTrigger = false;
+	isHorizontal = false;
 	LimitRange = 500.f;
 	MovementSpeed = 0.2f;
 }
@@ -30,56 +30,43 @@ void ANBC_MovementFloor::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	if (isGoBack)
+	//수직 수평 이동 구분
+	if (isHorizontal)
 	{
-		if (!isTrigger) GoForward();
-		else GoBack();
+		ForwardOrBack(isArrive);
 	}
 	else
 	{
-		if (!isTrigger) GoUp();
-		else GoDown();
+		//위 아래 이동 구분
+		UpOrDown(isArrive);
 	}
 
 	CurrentLoc = GetActorLocation();
 
 	float MovingDistance = FVector::Distance(OriginLoc, CurrentLoc);
 
-	if (MovingDistance <= 0.001f || MovingDistance >= LimitRange)
+	//최대 이동 거리 도달 시 Trigger값 변경
+	if (MovingDistance <= 0.f || MovingDistance >= LimitRange)
 	{
-		isTrigger = !isTrigger;
+		isArrive = !isArrive;
 	}
 }
 
-void ANBC_MovementFloor::GoForward()
+void ANBC_MovementFloor::ForwardOrBack(bool inTrigger)
 {
 	CurrentLoc = GetActorLocation();
 	FVector ForwardDir = GetActorForwardVector();
 
-	SetActorLocation(CurrentLoc + ForwardDir * MovementSpeed);
+	if (!inTrigger) SetActorLocation(CurrentLoc + ForwardDir * MovementSpeed);
+	else SetActorLocation(CurrentLoc - ForwardDir * MovementSpeed);
 }
 
-void ANBC_MovementFloor::GoBack()
-{
-	CurrentLoc = GetActorLocation();
-	FVector ForwardDir = GetActorForwardVector();
-
-	SetActorLocation(CurrentLoc - ForwardDir * MovementSpeed);
-}
-
-void ANBC_MovementFloor::GoUp()
+void ANBC_MovementFloor::UpOrDown(bool inTrigger)
 {
 	CurrentLoc = GetActorLocation();
 	FVector UpDir = GetActorUpVector();
 
-	SetActorLocation(CurrentLoc + UpDir * MovementSpeed);
-}
-
-void ANBC_MovementFloor::GoDown()
-{
-	CurrentLoc = GetActorLocation();
-	FVector UpDir = GetActorUpVector();
-
-	SetActorLocation(CurrentLoc - UpDir * MovementSpeed);
+	if(!inTrigger) SetActorLocation(CurrentLoc + UpDir * MovementSpeed);
+	else SetActorLocation(CurrentLoc - UpDir * MovementSpeed);
 }
 

@@ -32,17 +32,17 @@ void ANBC_RotateActor::Tick(float DeltaTime)
 	FQuat PitchQuat = FQuat::Identity;
 	FQuat RollQuat = FQuat::Identity;
 
-	if (isYaw)
+	if (isYawRotate)
 	{
 		YawQuat = FQuat(FVector(0, 0, 1), FMath::DegreesToRadians(RotationSpeed * DeltaTime));
 	}
 
-	if (isPitch)
+	if (isPitchRotate)
 	{
 		PitchQuat = FQuat(FVector(1, 0, 0), FMath::DegreesToRadians(RotationSpeed * DeltaTime));
 	}
 
-	if (isRoll)
+	if (isRollRotate)
 	{
 		RollQuat = FQuat(FVector(0, 1, 0), FMath::DegreesToRadians(RotationSpeed * DeltaTime));
 	}
