@@ -33,12 +33,12 @@ void ANBC_MovementFloor::Tick(float DeltaTime)
 	//수직 수평 이동 구분
 	if (isHorizontal)
 	{
-		ForwardOrBack(isArrive);
+		ForwardOrBack(isArrive, MovementSpeed * DeltaTime);
 	}
 	else
 	{
 		//위 아래 이동 구분
-		UpOrDown(isArrive);
+		UpOrDown(isArrive, MovementSpeed * DeltaTime);
 	}
 
 	CurrentLoc = GetActorLocation();
@@ -46,27 +46,27 @@ void ANBC_MovementFloor::Tick(float DeltaTime)
 	float MovingDistance = FVector::Distance(OriginLoc, CurrentLoc);
 
 	//최대 이동 거리 도달 시 Trigger값 변경
-	if (MovingDistance <= 0.f || MovingDistance >= LimitRange)
+	if (MovingDistance >= LimitRange)
 	{
 		isArrive = !isArrive;
 	}
 }
 
-void ANBC_MovementFloor::ForwardOrBack(bool inTrigger)
+void ANBC_MovementFloor::ForwardOrBack(bool inTrigger, float inMovementSpeed)
 {
 	CurrentLoc = GetActorLocation();
 	FVector ForwardDir = GetActorForwardVector();
 
-	if (!inTrigger) SetActorLocation(CurrentLoc + ForwardDir * MovementSpeed);
-	else SetActorLocation(CurrentLoc - ForwardDir * MovementSpeed);
+	if (!inTrigger) SetActorLocation(CurrentLoc + ForwardDir * inMovementSpeed);
+	else SetActorLocation(CurrentLoc - ForwardDir * inMovementSpeed);
 }
 
-void ANBC_MovementFloor::UpOrDown(bool inTrigger)
+void ANBC_MovementFloor::UpOrDown(bool inTrigger, float inMovementSpeed)
 {
 	CurrentLoc = GetActorLocation();
 	FVector UpDir = GetActorUpVector();
 
-	if(!inTrigger) SetActorLocation(CurrentLoc + UpDir * MovementSpeed);
-	else SetActorLocation(CurrentLoc - UpDir * MovementSpeed);
+	if(!inTrigger) SetActorLocation(CurrentLoc + UpDir * inMovementSpeed);
+	else SetActorLocation(CurrentLoc - UpDir * inMovementSpeed);
 }
 

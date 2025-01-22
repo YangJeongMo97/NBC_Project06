@@ -23,8 +23,8 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
-	void ForwardOrBack(bool inTrigger);
-	void UpOrDown(bool inTrigger);
+	void ForwardOrBack(bool inTrigger, float inMovementSpeed);
+	void UpOrDown(bool inTrigger, float inMovementSpeed);
 
 protected:
 	UPROPERTY(VisibleDefaultsOnly)
